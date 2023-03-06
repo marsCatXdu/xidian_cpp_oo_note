@@ -1,6 +1,6 @@
 # C++ OOP笔记7：类的继承、多继承与虚基类
 
-> 本文全部内容基于西安电子科技大学潘蓉老师的《面向对象程序设计》课程记录而成。更多其他技术类内容可关注我的掘金和知乎： https://juejin.cn/user/1996368848621319/posts、[李经纬 - 知乎 (zhihu.com)](https://www.zhihu.com/people/li-jing-wei-78/posts)
+> 本文全部内容基于西安电子科技大学潘蓉老师的《面向对象程序设计》课程记录而成。更多其他技术类内容可关注我的掘金和知乎： [掘金](https://juejin.cn/user/1996368848621319/posts)、[李经纬 - 知乎 (zhihu.com)](https://www.zhihu.com/people/li-jing-wei-78/posts)
 >
 > 有其他意见和建议欢迎联系，QQ：1428319077
 
@@ -22,28 +22,28 @@
 // 每次自增1，无限增长
 class Counter {
 private:
-	int value;
+    int value;
 public:
-	Counter(int initValue);
-	Counter();
-	void show();
-	void next();		// 自增
-	void reset();
-	int revalue();
+    Counter(int initValue);
+    Counter();
+    void show();
+    void next();        // 自增
+    void reset();
+    int revalue();
 };
 
 // 每次自增1，有循环
 class CycleCounter {
 private:
-	int value;
-    int base;			// 循环基数
+    int value;
+    int base;        // 循环基数
 public:
-	CycleCounter(int initValue);
-	CycleCounter();
-	void show();
-	void next();		// 自增
-	void reset();
-	int revalue();
+    CycleCounter(int initValue);
+    CycleCounter();
+    void show();
+    void next();     // 自增
+    void reset();
+    int revalue();
 };
 ```
 
@@ -64,16 +64,16 @@ DisplayableNumber 就是一个下面两个计数器共同的基类。
 ### 派生类的定义
 
 ```cpp
-class <派生类名>: <继承方式> <基类名> {	 // 继承方式：public, private, protected
-    									// 默认 private
-	<派生类新定义的成员>		// 和基类重复的就不需要再进行定义了
+class <派生类名>: <继承方式> <基类名> { // 继承方式：public, private, protected
+                                    // 默认 private
+    <派生类新定义的成员>               // 和基类重复的就不需要再进行定义了
 };
 
 // 例：
 class A {
     int i;
 };
-class B: public A {		// 派生类将自动继承基类所有成员，但不包含构造、析构器
+class B: public A {                // 派生类将自动继承基类所有成员，但不包含构造、析构器
     int j;
 };
 
@@ -120,14 +120,14 @@ public:
         return a;
     }
 protected:
-	int a;
+    int a;
 };
 class B: protected A {
 public:
-    int getA() {			// 为了起到和基类一样的效果，需要搞一个完全重名的函数
-        					// 否则在外面，也即是B的实例中是访问不到A::getA()的
-        					// 只能通过 B::getA() 间接取到
-        return A::getA()	// 显式访问基类成员
+    int getA() {         // 为了起到和基类一样的效果，需要搞一个完全重名的函数
+                         // 否则在外面，也即是B的实例中是访问不到A::getA()的
+                         // 只能通过 B::getA() 间接取到
+        return A::getA() // 显式访问基类成员
     };
 protected:
     ...
@@ -164,7 +164,7 @@ private:
 class Rectangle: public Point {
 public:
     Rectangle(float x, float y, float w, float h) {	// 派生类构造器
-        Point(x, y);// 错！不能在派生类构造器中显式调用基类构造器！这样创建了一个无名对象！
+        Point(x, y); // 错！不能在派生类构造器中显式调用基类构造器！这样创建了一个无名对象！
         W=w;
         H=h;
     }
@@ -212,22 +212,22 @@ Rectangle(float x, float y, float w, float h): Point(x, y), W(w), H(h) {}
 
 ```cpp
 class A {
-    friend class B;	// B 是 A 的友元，B 可以直接访问 A 里面的私有成员
+    friend class B;           // B 是 A 的友元，B 可以直接访问 A 里面的私有成员
 public:
 
 private:
     int getA() {
         return a;
     }
-	int a;
+    int a;
 };
 class B: public A {
 public:
     int callGetA() {
-        return getA();		// 直接读取 A 的私有成员
+        return getA();        // 直接读取 A 的私有成员
     }
     int directlyGetA() {
-        return a;			// 直接读取 A 的私有成员
+        return a;             // 直接读取 A 的私有成员
     }
 private:
     int b;
@@ -235,8 +235,8 @@ private:
 
 // 但是下面这样就不行了
 A aObj;
-aObj.callGetA();	// 正确
-aObj.getA();		// 错误。不能直接在类外调私有成员
+aObj.callGetA();    // 正确
+aObj.getA();        // 错误。不能直接在类外调私有成员
 ```
 
 作为基类的友元，在友元派生类中，访问基类的成员不再需要像之前的“跨类”访问一样，指明要访问哪个实例才能进行对友元的访问。因为那个的本质还是俩类，但这个却已经是类套着类，变成了类之套娃，实质上是一个了。
@@ -248,21 +248,21 @@ aObj.getA();		// 错误。不能直接在类外调私有成员
 下面，回忆一下之前的普通友元类。。。
 
 ```cpp
-class A {	// 被访问类
-...
-	friend class B;
+class A {    // 被访问类
+    ...
+    friend class B;
 };
 
-class B {	// 可以对 A 的实例为所欲为
-	...
-    void showA(A &a) {	// 一定要在参数中指明实例才能操作——总不能操作一个概念吧
+class B {    // 可以对 A 的实例为所欲为
+    ...
+    void showA(A &a) {    // 一定要在参数中指明实例才能操作——总不能操作一个概念吧
         ...
     }
 };
 
 A a1;
 B b1;
-b1.showA(a1);	// 使用
+b1.showA(a1);    // 使用
 ```
 
 ##### 友元不能继承
@@ -277,7 +277,7 @@ b1.showA(a1);	// 使用
 
 ```cpp
 class <派生类名>: <继承方式> <基类名1>, ..., <继承方式> <基类名n> {
-	<派生类新定义成员>
+    <派生类新定义成员>
 };
 // 多继承派生类构造器。总参数表 中必须！包含所有基类初始化所需的参数
 <派生类名>(<总参数表>): <基类名1>(<参数表1>), ..., <基类名n>(<参数表n>) {
@@ -308,7 +308,7 @@ public:
     int a;
     void display();
 };
-class C: public A, public B {	// 这样的C中有两套 a、display()
+class C: public A, public B {    // 这样的C中有两套 a、display()
 public:
     int b;
     void show();
@@ -324,7 +324,7 @@ c1.A::display();
 
 ```cpp
 // A、B 类还和上面那个例子相同
-class C: public A, public B {	// 这样的C中有三套 a、display
+class C: public A, public B {    // 这样的C中有三套 a、display
 public:
     int a;
     void display();
@@ -332,9 +332,9 @@ public:
 
 C c1;
 c1.a=3;
-c1.display();	// 这样直接访问是可以的，但只直接访问派生类中的成员
-				// 即，基类成员在派生类中被派生类的同名成员【屏蔽】了
-c1.A::a=3;		// 但仍可通过指出作用域来访问
+c1.display();             // 这样直接访问是可以的，但只直接访问派生类中的成员
+                          // 即，基类成员在派生类中被派生类的同名成员【屏蔽】了
+c1.A::a=3;                // 但仍可通过指出作用域来访问
 c1.A::display();
 ```
 
@@ -360,7 +360,7 @@ c.A::a;	// 这样是 ok 的
 #### 虚基类定义
 
 ```cpp
-class <派生类名>: virtual <继承方式><共同基类名>;	// <共同基类名> 就是虚基类
+class <派生类名>: virtual <继承方式><共同基类名>;    // <共同基类名> 就是虚基类
 ```
 
 虚基类的派生类对象中，将只存在一个虚基类成员的副本。
@@ -380,15 +380,15 @@ protected:
 };
 class A1: virtual public A {
 public:
-    A1() {cout<<a<<endl; }		// 调用一次A的构造器。输出10
+    A1() {cout<<a<<endl; }        // 调用一次A的构造器。输出10
 };
 class A2: virtual public A {
 public:
-    A2() {cout<<a<<endl; }		// 不再调用A的构造器。输出10
+    A2() {cout<<a<<endl; }        // 不再调用A的构造器。输出10
 };
 class B: A1, A2 {
 public:
-    B() {cout<<a<<endl; }		// 10
+    B() {cout<<a<<endl; }         // 10
 };
 
 B obj;
@@ -432,13 +432,13 @@ public:
 TopLevel obj;
 
 /* 输出：
-Base1		# TopLevel 先构造虚基类 Level2（ Level2 先构造虚基类 Base1 ）
-Base2		# Level2 再调用基类 Base2
-Level2		# 调用 Level2 构造器 
+Base1        # TopLevel 先构造虚基类 Level2（ Level2 先构造虚基类 Base1 ）
+Base2        # Level2 再调用基类 Base2
+Level2       # 调用 Level2 构造器 
 # Level2 一侧构造完成，开始构造 Level1 一侧
-Base2		# Base1在TopLevel1中也是虚基类，虚基类只需要被构造一次，故本次只构造Base2
-Level1		# Level1 构造
-TopLevel	# 终于轮到自己了
+Base2        # Base1在TopLevel1中也是虚基类，虚基类只需要被构造一次，故本次只构造Base2
+Level1       # Level1 构造
+TopLevel     # 终于轮到自己了
 */
 ```
 
@@ -459,10 +459,10 @@ class C: virtual public A {
     C(int n): A(n) {...}
 };
 class D: public B, public C {
-    D(int n): A(n), B(n), C(n) {...}	// 间接基类构造也要调用。
-    									// 因，如果让B、C自己调用A，那么可能会导致
-    									// B、C使用不同的值初始化A，而A又只有一个，产生矛盾
-    									// 该情况下，将忽略B、C对A的调用，只用D的参数调A
+    D(int n): A(n), B(n), C(n) {...}    // 间接基类构造也要调用。
+                                        // 因，如果让B、C自己调用A，那么可能会导致
+                                        // B、C使用不同的值初始化A，而A又只有一个，产生矛盾
+                                        // 该情况下，将忽略B、C对A的调用，只用D的参数调A
 };
 ```
 
