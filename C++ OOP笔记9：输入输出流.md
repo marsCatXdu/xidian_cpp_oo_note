@@ -1,6 +1,6 @@
 # C++ OOP笔记9：输入输出流
 
-> 本文全部内容基于西安电子科技大学潘蓉老师的《面向对象程序设计》课程记录而成。更多其他技术类内容可关注我的掘金和知乎： https://juejin.cn/user/1996368848621319/posts、[李经纬 - 知乎 (zhihu.com)](https://www.zhihu.com/people/li-jing-wei-78/posts)
+> 本文全部内容基于西安电子科技大学潘蓉老师的《面向对象程序设计》课程记录而成。更多其他技术类内容可关注我的掘金和知乎： [掘金](https://juejin.cn/user/1996368848621319/posts)、[李经纬 - 知乎 (zhihu.com)](https://www.zhihu.com/people/li-jing-wei-78/posts)
 >
 > 有其他意见和建议欢迎联系，QQ：1428319077
 
@@ -53,14 +53,14 @@ I/O流类库头文件
 cout 是 ostream 的对象，其在 iostream 头文件中作为全局对象定义如下：
 
 ```cpp
-ostream cout(stdout);		// 定义如此，stdout 就是屏幕
+ostream cout(stdout);    // 定义如此，stdout 就是屏幕
 ```
 
 单个字符输出
 
 ```cpp
 cout.put('a');
-cout.put(71).put(79);	// ascii，这样是连续调用
+cout.put(71).put(79);    // ascii，这样是连续调用
 ```
 
 
@@ -72,7 +72,7 @@ cout.put(71).put(79);	// ascii，这样是连续调用
 其为 istream 流类的对象，同样在 iostream 中作为全局对象定义如下：
 
 ```cpp
-istream cin(stdin);		// stdin： 键盘
+istream cin(stdin);     // stdin： 键盘
 ```
 
 
@@ -86,33 +86,33 @@ istream cin(stdin);		// stdin： 键盘
 - 使用时要用 ios:: 前缀，使用符号名指定。
 
   ```cpp
-  long ios::setf(long flags);		// 追加状态标志，在现有的之上加
-  long ios::unsetf(long flags);	// 清除标志
-  long ios::flags();	// 获取状态标志
-  long ios::flags(long flag);	// 将流的状态标志位设置为flag
-  							// 并返回【设置前的】状态标志值
-  							// 将会将过去的所有flag清0
+  long ios::setf(long flags);    // 追加状态标志，在现有的之上加
+  long ios::unsetf(long flags);  // 清除标志
+  long ios::flags();             // 获取状态标志
+  long ios::flags(long flag);    // 将流的状态标志位设置为flag
+                                 // 并返回【设置前的】状态标志值
+                                 // 将会将过去的所有flag清0
   // 这些函数需要使用流类对象进行调用
   <流对象名>.<函数名>(ios::<状态标志>)
-  cout.setf(ios::showpos);	// 正数前面加正号
-  cout.setf(ios::scientific);	// 科学计数法表示
-  cout.setf(ios::showpos | ios::scientific);	// 同时生效
+  cout.setf(ios::showpos);       // 正数前面加正号
+  cout.setf(ios::scientific);    // 科学计数法表示
+  cout.setf(ios::showpos | ios::scientific);    // 同时生效
   ```
 
 - 设置输出宽度，不够的补空格。默认是0，就按照实际的往出打
 
   ```cpp
-  int ios::width(int len)	// 返回设置之前的宽度
-  int ios::width()		// 返回当前宽度
+  int ios::width(int len)    // 返回设置之前的宽度
+  int ios::width()           // 返回当前宽度
   // width 函数只会对后面紧跟着输出的第一个输出项有效！
-  cout<<i<<j;	// 只有 i 会起作用
+  cout<<i<<j;                // 只有 i 会起作用
   ```
 
 - 设置填充字符
 
   ```cpp
-  char ios::fill(char ch);// 返回设置之前的。和width配合使用填空
-  char ios::fill();		// 返回当前
+  char ios::fill(char ch); // 返回设置之前的。和width配合使用填空
+  char ios::fill();        // 返回当前
   ```
 
 - 类似的，还有 precision(int p)（浮点输出精度，是整个数字长度，有效位数!）
@@ -158,8 +158,8 @@ precision:6
 int a;
 char b;
 
-a = cin.get();	// 输入的值是返回值
-cin.get(b);		// 读取成功就把读到的赋给 b。成功返回非0值，失败返回0
+a = cin.get();    // 输入的值是返回值
+cin.get(b);       // 读取成功就把读到的赋给 b。成功返回非0值，失败返回0
 // cin.get(字符数组/字符指针, 字符个数n, 终止字符);
 // 连续读取 n-1 个字符赋给数组指针，末尾自动加\0
 // 如果在 n-1 个字符前遇到了终止字符，则读取提前结束
@@ -168,14 +168,14 @@ int main() {
     char ch[20];
     cin.get(ch, 10, '/');
     cout<<ch<<endl;
-    cin.get(ch, 20, '\n');	// 如果读到换行为止，则 \n 是可省略的
+    cin.get(ch, 20, '\n');    // 如果读到换行为止，则 \n 是可省略的
     cout<<ch<<endl;
     return 0;
 }
 /* 输出例：
-you!/her.	// 第一个 cin 对应的输入
-you!		// 只读到 / 位置
-/her.		// 第二个 cin 对应的输入，从刚才停下的位置继续开始。输出。 
+you!/her.    // 第一个 cin 对应的输入
+you!         // 只读到 / 位置
+/her.        // 第二个 cin 对应的输入，从刚才停下的位置继续开始。输出。 
 */
 ```
 
@@ -215,10 +215,10 @@ while(!cin.eof())
 ##### ignore()
 
 ```cpp
-cin.ignore(n, 终止字符); 	// 忽略输入流中的 n 个字符，或遇到终止提前结束
-cin.ignore(5, 'A'); // 跳过 5 个字符，遇到 'A' 就不再跳
+cin.ignore(n, 终止字符);    // 忽略输入流中的 n 个字符，或遇到终止提前结束
+cin.ignore(5, 'A');        // 跳过 5 个字符，遇到 'A' 就不再跳
 
-ignore(); // 无参数情况下，等价于 ignore(1, EOF)，也就是只跳一个
+ignore();                  // 无参数情况下，等价于 ignore(1, EOF)，也就是只跳一个
 ```
 
 
@@ -237,20 +237,20 @@ int main() {
     char *p = "12345", *q="678";
     char f[4], g[4];
     int i = 10;
-    cout<<p<<setw(6)<<q<<setw(4)<<p<<q<<endl;	// 设置输出宽度
-    cin>>setw(4)>>f>>g;		// 设置输入宽度
+    cout<<p<<setw(6)<<q<<setw(4)<<p<<q<<endl;    // 设置输出宽度
+    cin>>setw(4)>>f>>g;                          // 设置输入宽度
     cout<<f<<endl<<g<<endl<<"i:"<<i<<endl;
     return 0
 }
 
 /*
-12345   67812345678		// q只有三个数，要右对齐，所以最前空了三个格
-						// 后面 setw(4) 小于实际宽度，所以按实际显示
-12345					// 键盘敲12345
-123						// 设置的输入宽度为4，所以只存下了3个字符
-						// 超长的部分被截断，放到下一个输入里面
+12345   67812345678        // q只有三个数，要右对齐，所以最前空了三个格
+                           // 后面 setw(4) 小于实际宽度，所以按实际显示
+12345                      // 键盘敲12345
+123                        // 设置的输入宽度为4，所以只存下了3个字符
+                           // 超长的部分被截断，放到下一个输入里面
 45
-i:10					// 所有控制符都失效，直接显示
+i:10                       // 所有控制符都失效，直接显示
 
 */
 
@@ -301,13 +301,13 @@ uppercase大写；showpos正数带"+"；skipws忽略前导空格
 using namespace std;
 
 int main() {
-	double values[] = {1.23, 35.36, 653.7, 1234.56};
+    double values[] = {1.23, 35.36, 653.7, 1234.56};
     char *names[] = {"Zoot", "Jimmy", "AI", "Stan"};
     for(int i=0; i<4; i++) {
-        cout<<setiosflags(ios::left)	// 设置左对齐
-            <<setw(6)<<names[i]			// 设置输出长度
-            <<resetiosflags(ios::left)	// 取消左对齐
-            <<setw(10)<<values[i]		// 设置输出长度
+        cout<<setiosflags(ios::left)    // 设置左对齐
+            <<setw(6)<<names[i]         // 设置输出长度
+            <<resetiosflags(ios::left)  // 取消左对齐
+            <<setw(10)<<values[i]       // 设置输出长度
             <<endl;
     }
     return 0
