@@ -1,6 +1,6 @@
 # C++ OOP笔记4：通过 static 实现对象间的数据共享；对象指针
 
-> 本文全部内容基于西安电子科技大学潘蓉老师的《面向对象程序设计》课程记录而成。更多其他技术类内容可关注我的掘金和知乎： https://juejin.cn/user/1996368848621319/posts、[李经纬 - 知乎 (zhihu.com)](https://www.zhihu.com/people/li-jing-wei-78/posts)
+> 本文全部内容基于西安电子科技大学潘蓉老师的《面向对象程序设计》课程记录而成。更多其他技术类内容可关注我的掘金和知乎： [掘金](https://juejin.cn/user/1996368848621319/posts)、[李经纬 - 知乎 (zhihu.com)](https://www.zhihu.com/people/li-jing-wei-78/posts)
 >
 > 有其他意见和建议欢迎联系，QQ：1428319077
 
@@ -17,7 +17,7 @@
 静态成员可以在类不实例化的情况下进行访问。
 
 ```cpp
-static int a;			// 这么声明就ok了
+static int a;        // 这么声明就ok了
 ```
 
 
@@ -30,12 +30,12 @@ static int a;			// 这么声明就ok了
 
 ```cpp
 class Student {
-	...
-	static int stuNumber;	// 某类东西的数量，这种东西值得各个对象共享
-	...
+    ...
+    static int stuNumber;    // 某类东西的数量，这种东西值得各个对象共享
+    ...
 };
 ...
-int Student::stuNumber = 0;	// 需要指出类型，不能加 static
+int Student::stuNumber = 0;  // 需要指出类型，不能加 static
 ```
 
 #### 静态成员的使用
@@ -45,8 +45,8 @@ int Student::stuNumber = 0;	// 需要指出类型，不能加 static
 在类外访问，必须使用成员访问运算符（.）或作用域运算符（::）
 
 ```cpp
-cout<<Student::stuNumber;	// 没有实例也可以用
-cout<<stu1.stuNumber;		// 这样也行
+cout<<Student::stuNumber;    // 没有实例也可以用
+cout<<stu1.stuNumber;        // 这样也行
 ```
 
 #### 静态成员可以有权限限制
@@ -66,18 +66,18 @@ cout<<stu1.stuNumber;		// 这样也行
 ```cpp
 // 访问非静态成员
 class Student {
-	static void showInfo(Student stu) {
-		cout<<a<<stu.b;		// 静态的直接引用，非静态的需要加上对象名
-	}
-	static int a;
-	int b;
+    static void showInfo(Student stu) {
+        cout<<a<<stu.b;        // 静态的直接引用，非静态的需要加上对象名
+    }
+    static int a;
+    int b;
 };
 
 int main() {
-	Student stu1;
-	...
-	Student::showInfo(stu1);	// 这样把一个对象传过去就能访问了
-	...
+    Student stu1;
+    ...
+    Student::showInfo(stu1);    // 这样把一个对象传过去就能访问了
+    ...
 }
 ```
 
@@ -88,9 +88,9 @@ int main() {
 对象指针，指向对象所在内存的起始地址。
 
 ```
-<类名> *<对象指针名> = &<对象名>;	 // 声明和初始化赋值。与普通指针相同
-<指针名> -> <public成员名>;		// 访问
-(*<对象指针名>).<public成员名>	   // 访问
+<类名> *<对象指针名> = &<对象名>;   // 声明和初始化赋值。与普通指针相同
+<指针名> -> <public成员名>;        // 访问
+(*<对象指针名>).<public成员名>      // 访问
 ```
 
 
@@ -99,10 +99,10 @@ int main() {
 
 ```cpp
 Student inputInfo(Student *stu) {
-	string name;
-	cin>>name;
-	stu->name = name;
-	return *stu;	// 返回指针所指向的对象
+    string name;
+    cin>>name;
+    stu->name = name;
+    return *stu;        // 返回指针所指向的对象
 }
 ```
 
