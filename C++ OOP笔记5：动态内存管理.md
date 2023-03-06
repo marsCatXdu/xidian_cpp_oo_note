@@ -1,15 +1,15 @@
 # C++ OOP笔记5：动态对象、this指针、成员指针、对象引用、常对象、类模板
 
-> 本文全部内容基于西安电子科技大学潘蓉老师的《面向对象程序设计》课程记录而成。更多其他技术类内容可关注我的掘金和知乎： https://juejin.cn/user/1996368848621319/posts、[李经纬 - 知乎 (zhihu.com)](https://www.zhihu.com/people/li-jing-wei-78/posts)
+> 本文全部内容基于西安电子科技大学潘蓉老师的《面向对象程序设计》课程记录而成。更多其他技术类内容可关注我的掘金和知乎： [掘金](https://juejin.cn/user/1996368848621319/posts)、[李经纬 - 知乎 (zhihu.com)](https://www.zhihu.com/people/li-jing-wei-78/posts)
 >
 > 有其他意见和建议欢迎联系，QQ：1428319077
 
 ## 动态对象
 
 ```cpp
-new <类名>;				// 申请成功会返回一个指向对象的指针
-new <类名>(<参数列表>);	 // 自动调用带参构造器
-delete <指向对象的指针名>;	// 手动释放对应对象的内存空间
+new <类名>;                   // 申请成功会返回一个指向对象的指针
+new <类名>(<参数列表>);        // 自动调用带参构造器
+delete <指向对象的指针名>;      // 手动释放对应对象的内存空间
 
 Student *stuPtr = new Student;
 delete stuPtr;
@@ -68,22 +68,22 @@ int *p = &time.hour;
 普通的指向普通函数的指针：
 
 ```cpp
-void (*p)();	// 普通的指向 void 型函数的指针变量
-p = func;		// func 是一个定义好的函数，这一行用指针指向它
-(*p)();			// 通过指针变量调用，等效于 func();
+void (*p)();     // 普通的指向 void 型函数的指针变量
+p = func;        // func 是一个定义好的函数，这一行用指针指向它
+(*p)();          // 通过指针变量调用，等效于 func();
 ```
 
 指向public函数的指针：
 
 ```cpp
-函数类型名 (类名::*指针变量名)(参数表);	// 要表明指针指向哪个类中的成员函数
-指针变量名 = &类名::成员函数名;			  // 指向类中的函数
+函数类型名 (类名::*指针变量名)(参数表);    // 要表明指针指向哪个类中的成员函数
+指针变量名 = &类名::成员函数名;           // 指向类中的函数
 
-int (Point::*pGetX)(int a);		// 比较一般的写法
+int (Point::*pGetX)(int a);           // 比较一般的写法
 
 void (*p)();
 p = &Time::showTime;
-(t.*p)();				// 新的调用方法，等效于 t.showTime();
+(t.*p)();                             // 新的调用方法，等效于 t.showTime();
 ```
 
 
@@ -92,18 +92,18 @@ p = &Time::showTime;
 
 ```cpp
 class Point {
-	...
-	static int count;
-	...
+    ...
+    static int count;
+    ...
     static void GetC() {
         ...
     }
 };
-int Point::count = 123;				// 静态数据成员，类外初始化
+int Point::count = 123;           // 静态数据成员，类外初始化
 
-int *countPtr = &Point::count;		// 指上静态数据成员
-void (*gc)() = Point::GetC;			// 指上静态成员函数
-gc();				// 调用就这样
+int *countPtr = &Point::count;    // 指上静态数据成员
+void (*gc)() = Point::GetC;       // 指上静态成员函数
+gc();                             // 调用就这样
 ```
 
 
@@ -119,7 +119,7 @@ Time myTime;
 Time &refTime = myTime;
 
 refTIme.func();
-myTime.func();		// 完全等效
+myTime.func();        // 完全等效
 ```
 
 ### 引用调用
@@ -127,12 +127,12 @@ myTime.func();		// 完全等效
 ```cpp
 Student returnS(Student s) {return s;}
 Student stu1;
-stu1.returnS(stu1);	// 到这一行，首先会调用 Student 类的复制构造器。
-					// 复制构造器将形参 s 初始化为实参 stu1
-					// 然后，第二次构造复制构造器，以将 return s 的这个返回值对象初始化为 s
-					// 接下来 returnS 的返回值对象调用析构器，将返回值对象析构。
-					// 然后形参 s 对象的析构器也要被调用。
-					// 就这样，啥都没干就调用了两次构造器、调用了两次析构器。成本过高。
+stu1.returnS(stu1);     // 到这一行，首先会调用 Student 类的复制构造器。
+                        // 复制构造器将形参 s 初始化为实参 stu1
+                        // 然后，第二次构造复制构造器，以将 return s 的这个返回值对象初始化为 s
+                        // 接下来 returnS 的返回值对象调用析构器，将返回值对象析构。
+                        // 然后形参 s 对象的析构器也要被调用。
+                        // 就这样，啥都没干就调用了两次构造器、调用了两次析构器。成本过高。
 ```
 
 而，参数的引用传递可以有效避免值传递带来的高额开销。
@@ -158,10 +158,10 @@ const <数据类型名> <常量名>=<表达式>;
 #### 常对象：其数据成员值在该对象生命周期内不能被改变
 
 ```cpp
-const <类名> <对象名>(<初始化值>);		// 常用这种
-<类名> const <对象名>(<初始化值>);		// 两种效果相同
+const <类名> <对象名>(<初始化值>);    // 常用这种
+<类名> const <对象名>(<初始化值>);    // 两种效果相同
 
-const Time t(1, 1, 1);		// 其所有的数据都是常量，因此必须被初始化
+const Time t(1, 1, 1);             // 其所有的数据都是常量，因此必须被初始化
 ```
 
 常对象不能调用普通的成员函数——防止在成员函数中尝试修改常对象数据的值
@@ -192,7 +192,7 @@ Time::Time(int h): Hour(h) {}
 可以通过常成员函数访问数据成员，但不能够修改值，也不能调用该类的非 const 函数
 
 ```cpp
-<数据类型> <函数名> (<参数表>) const;		// 这个 const 要写在最后。声明和定义时候都要加
+<数据类型> <函数名> (<参数表>) const;    // 这个 const 要写在最后。声明和定义时候都要加
 ```
 
 常对象只能调用常成员函数
@@ -205,22 +205,22 @@ const 还可以用于对重载函数的区分。
 
 ```cpp
 class R {
-	R(int i, int j) {
-		R1 = i;
-		R2 = j;
-	}
-	void print();
-	void print() const;
-	
-	int R1, R2;
+    R(int i, int j) {
+        R1 = i;
+        R2 = j;
+    }
+    void print();
+    void print() const;
+
+    int R1, R2;
 };
 
 ...
 R a(5, 4);
-a.print();	// 普通对象，调重载的普通函数
+a.print();        // 普通对象，调重载的普通函数
 
-const R b(1, 2);	// 声明一个常对象
-b.print();	// 常量对象，调重载的常函数
+const R b(1, 2);  // 声明一个常对象
+b.print();        // 常量对象，调重载的常函数
 ```
 
 
@@ -252,9 +252,9 @@ const 类型名* 指针变量名；
 ```cpp
 Time t1, t2;
 const Time* p=&t1;
-(*p).hour=18;	// 错，不能通过常指针修改变量
-t1.hour = 18;	// 对，t1 不是常对象
-p = &t2;		// 对，指向常对象的指针仍然是指针，可以被重新赋值
+(*p).hour=18;    // 错，不能通过常指针修改变量
+t1.hour = 18;    // 对，t1 不是常对象
+p = &t2;         // 对，指向常对象的指针仍然是指针，可以被重新赋值
 ```
 
 
@@ -282,11 +282,11 @@ void fun(const Time &t);
 ```cpp
 <类名> <数组名>[<下标表达式>];
 // 数组建立时，每个元素都是一个独立的对象，也就是说有多少个元素就要创建多少次对象
-Student stud[3] = [11, 22, 33];	// 这样填写构造器实参
+Student stud[3] = [11, 22, 33]; // 这样填写构造器实参
 Student exStud[2] = {Student(11, 'abc'), Student(22, 'def')};
-						// 构造器有多个参数，需要这样调用构造器
+                                // 构造器有多个参数，需要这样调用构造器
 Student exStud[2] = {Student(11, 'abc')};
-						// 如果构造器有默认参数值，则第二个直接通过默认参数构造
+                                // 如果构造器有默认参数值，则第二个直接通过默认参数构造
 ```
 
 访问：
@@ -300,9 +300,9 @@ Student exStud[2] = {Student(11, 'abc')};
 #### 动态对象数组
 
 ```cpp
-CPoint* ptr = new CPoint[5];	// 声明并分配空间
+CPoint* ptr = new CPoint[5];    // 声明并分配空间
 ...
-delete[] ptr;	// 释放上面动态申请的内存
+delete[] ptr;                   // 释放上面动态申请的内存
 ```
 
 
@@ -312,20 +312,20 @@ delete[] ptr;	// 释放上面动态申请的内存
 
 ```cpp
 class A {
-	...
+    ...
 };
 class B {
-	B(const A &a):m_a(a) {	// 在这里调用了复制构造器，把 a 复制给 m_a
-		...
-	}
+    B(const A &a):m_a(a) {    // 在这里调用了复制构造器，把 a 复制给 m_a
+        ...
+    }
     /* 或
-    	B(const A &a):m_a(a) {
-			m_a = a;
-			...
-		}
+    B(const A &a):m_a(a) {
+        m_a = a;
+        ...
+    }
     */
     
-	A m_a;		// 对象成员。A需要在B前面进行声明
+    A m_a;                    // 对象成员。A需要在B前面进行声明
 };
 ```
 
@@ -348,9 +348,9 @@ class B {
 类模板实例化出来的类：“模板类”（从模板来的类）
 
 ```cpp
-template <class 类型参数>	// 类型参数数量不限
+template <class 类型参数>    // 类型参数数量不限
 class <类模板名> {
-	...
+    ...
 };
 
 // 例1：
@@ -373,18 +373,18 @@ private:
 };
 
 // 例2：
-template <class T1, class T2>		// 多个类型的参数
+template <class T1, class T2>    // 多个类型的参数
 class A {
-	...
+    ...
 };
 
-A<int, double> obj;  // 实例化对象。先实例化出对应类型的类，再实例化对象
+A<int, double> obj;              // 实例化对象。先实例化出对应类型的类，再实例化对象
 
 
-template <class T=int>		// 使用默认参数的类模板
+template <class T=int>           // 使用默认参数的类模板
 class Array {
-	...
+    ...
 };
-Array<> intArray;		// 可以留空
+Array<> intArray;                // 可以留空
 ```
 
