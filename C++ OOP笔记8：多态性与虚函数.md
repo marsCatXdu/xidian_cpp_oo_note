@@ -1,6 +1,6 @@
 # C++ OOP笔记8：多态性与虚函数
 
-> 本文全部内容基于西安电子科技大学潘蓉老师的《面向对象程序设计》课程记录而成。更多其他技术类内容可关注我的掘金和知乎： https://juejin.cn/user/1996368848621319/posts、[李经纬 - 知乎 (zhihu.com)](https://www.zhihu.com/people/li-jing-wei-78/posts)
+> 本文全部内容基于西安电子科技大学潘蓉老师的《面向对象程序设计》课程记录而成。更多其他技术类内容可关注我的掘金和知乎： [掘金](https://juejin.cn/user/1996368848621319/posts)、[李经纬 - 知乎 (zhihu.com)](https://www.zhihu.com/people/li-jing-wei-78/posts)
 >
 > 有其他意见和建议欢迎联系，QQ：1428319077
 
@@ -19,14 +19,14 @@
   class B: public A {...};
   A a, *pa;
   B b;
-  A &a1 = b;	// a1 和 b 不共享存储空间，而是和 B 中与 A 相同的那部分共享！
+  A &a1 = b;    // a1 和 b 不共享存储空间，而是和 B 中与 A 相同的那部分共享！
   ```
 
 - 派生类的对象的地址可以赋值给基类的指针变量
 
   ```cpp
-  pa = &b;	// 指向 b 中从 A 继承的那一部分，而不是 b 的全部
-  			// 如果 B 中有与A中同名的函数，那么通过pa->func()调用的将是A的
+  pa = &b;    // 指向 b 中从 A 继承的那一部分，而不是 b 的全部
+              // 如果 B 中有与A中同名的函数，那么通过pa->func()调用的将是A的
   ```
 
 替代后，派生类对象就可以当作基类的对象用了。但是只能访问从基类继承的成员，也只能调用基类中包含的函数
@@ -90,7 +90,7 @@ public:
 };
 class GStudent: public Student {
 public:
-    virtual void print() {	// 这里的 virtual 可省略
+    virtual void print() {    // 这里的 virtual 可省略
         cout<<...;
     }
 };
@@ -99,7 +99,7 @@ int main() {
     Student s1, *ps;
     GStudent s2;
     ps = &s2;
-    ps->print();	// 调用的是 GStudent 中的print 
+    ps->print();             // 调用的是 GStudent 中的print 
 }
 ```
 
@@ -122,12 +122,12 @@ public:
         cout<<"graduated student"<<endl;
     }
 };
-void fun(Student &s) {			// 对象的引用作参数
-    s.print();					// 通过对象引用调用虚函数
+void fun(Student &s) {  // 对象的引用作参数
+    s.print();          // 通过对象引用调用虚函数
 }
 
 GStudent s1;
-fun(s1);						// 这样调用的就是派生类的虚函数，打印graduate..
+fun(s1);                // 这样调用的就是派生类的虚函数，打印graduate..
 ```
 
 
@@ -153,45 +153,45 @@ virtual ~<类名>();
 ```cpp
 class Base {
 public:
-	Base() {}
-    ~Base() {						// 不定义为虚函数
+    Base() {}
+    ~Base() {                // 不定义为虚函数
         cout<<"Base destructor"<<endl;
     }
 };
 class Deriverd: public Base {
 public:
-	Deriverd() {}
-    ~Deriverd() {					// 不定义为虚函数
+    Deriverd() {}
+    ~Deriverd() {            // 不定义为虚函数
         cout<<"Deriverd destructor"<<endl;
     }
 };
 int main() {
     Base *b = new Deriverd;
-    delete b;	// 这样算静态联编，b被关联到基类对象，只会调用基类的析构器
-    			// 输出只有：Base destructor
-    			// 这样就会跳过派生类析构器中的内存释放逻辑，导致内存泄漏
+    delete b;   // 这样算静态联编，b被关联到基类对象，只会调用基类的析构器
+                // 输出只有：Base destructor
+                // 这样就会跳过派生类析构器中的内存释放逻辑，导致内存泄漏
     return 0;
 }
 //==============================
 class Base {
 public:
-	Base() {}
-    virtual ~Base() {						// 虚函数
+    Base() {}
+    virtual ~Base() {            // 虚函数
         cout<<"Base destructor"<<endl;
     }
 };
 class Deriverd: public Base {
 public:
-	Deriverd() {}
-    ~Deriverd() {							// 虚函数
+    Deriverd() {}
+    ~Deriverd() {                // 虚函数
         cout<<"Deriverd destructor  ";
     }
 };
 int main() {
     Base *b = new Deriverd;
-    delete b;	// 动态联编，b被关联到派生类对象，会先调派生类析构器，再调基类析构器
-    			// 输出：Deriverd destructor  Base destructor
-    			// 会执行派生类的析构器，能够避免内存泄漏
+    delete b;   // 动态联编，b被关联到派生类对象，会先调派生类析构器，再调基类析构器
+                // 输出：Deriverd destructor  Base destructor
+                // 会执行派生类的析构器，能够避免内存泄漏
     return 0;
 }
 ```
@@ -232,10 +232,10 @@ public:
 
 Circle C1(10, 10, 20);
 Point *Pp;
-Pp = &C1;			// 基类对象指针
-cout<<Pp->area();	// 正确。打印圆的面积
-Point & Rp = C1;	// 基类对象引用
-cout<<Rp->area();	// 正确。打印圆的面积
+Pp = &C1;            // 基类对象指针
+cout<<Pp->area();    // 正确。打印圆的面积
+Point & Rp = C1;     // 基类对象引用
+cout<<Rp->area();    // 正确。打印圆的面积
 ```
 
 
@@ -260,8 +260,8 @@ virtual <返回值类型> <函数名>(<参数表>) = 0;
 注意，纯虚函数和【函数体为空】的虚函数不同，前者没有函数体且不能被实例化，后者有函数体只不过是空的，可以被实例化
 
 ```cpp
-virtual void func() {}		// 函数体为空的虚函数
-virtual void func() = 0;	// 纯虚函数
+virtual void func() {}    // 函数体为空的虚函数
+virtual void func() = 0;  // 纯虚函数
 ```
 
 
@@ -290,30 +290,30 @@ public:
         x=d;
         y=w;
     }
-    virtual void area() = 0;	// 纯虚
+    virtual void area() = 0;    // 纯虚
 protected:
     int x, y;
 };
 class Square: public Shapes {
 public:
-    void area() {				// 实现虚函数
+    void area() {               // 实现虚函数
         cout<<x*y<<endl;
     }
 };
 class Circle: public Shapes {
 public:
-    void area() {				// 实现虚函数
+    void area() {               // 实现虚函数
         cout<<PI*x*x<<endl;
     }
 };
 
 int main() {
-    Shapes *ptr[2];				// 指向抽象类类型的指针
+    Shapes *ptr[2];    // 指向抽象类类型的指针
     Square s1;
     Circle c1;
-    ptr[0]=&s1;					// 抽象类指针指向派生类对象
+    ptr[0]=&s1;        // 抽象类指针指向派生类对象
     ptr[0]->setValue(10, 5);
-    ptr[0]->area();				// 抽象类指针调用派生类成员函数
+    ptr[0]->area();    // 抽象类指针调用派生类成员函数
     ptr[0]=&c1;
     ptr[1]->setValue(10);
     ptr[1]->area();
@@ -327,22 +327,22 @@ int main() {
 
 ```cpp
 class B0 {
-public:				// 留给外部的接口
-    virtual void display() = 0;	// 纯虚函数
+public:                             // 留给外部的接口
+    virtual void display() = 0;     // 纯虚函数
 };
 class B1: public B0 {
 public:
-    void display() {				// 实现虚函数
+    void display() {                // 实现虚函数
         cout<<"B1::display()"<<endl;
     }
 };
 class D1: public B1 {
-    void display() {				// 重新定义
+    void display() {                // 重新定义
         cout<<"D1::display()"<<endl;
     }
 };
 
-void f1(B0* ptr) {  // 将一个抽象基类的指针，通过这个指针访问不同的函数
+void f1(B0* ptr) {      // 将一个抽象基类的指针，通过这个指针访问不同的函数
     ptr->display();
 }
 
@@ -351,18 +351,9 @@ int main() {
     B1 b1;
     D1 d1;
     p = &b1;
-    f1(p);		// 基类指针指向派生类对象，输出：B1::display()
+    f1(p);             // 基类指针指向派生类对象，输出：B1::display()
     p = &d1;
-    f1(p);		// 基类指针指向派生类对象，输出：D1::display()
-    			// 中间的多少层继承直接穿透，拿到最终的实现
+    f1(p);             // 基类指针指向派生类对象，输出：D1::display()
+                       // 中间的多少层继承直接穿透，拿到最终的实现
 }
 ```
-
-
-
-
-
-
-
-
-
