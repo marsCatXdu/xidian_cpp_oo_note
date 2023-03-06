@@ -85,17 +85,17 @@ public、private、protected，三者可以多次出现。一般来说前两者�
 class Time {
 public:
     Time(int newH, int newM, int newS = 10);// 参数可有可无可默认，构造器可重载
-    										// 默认值需要在声明时添加
-    ~Time();		// 析构函数没有参数，不能被重载。
-	void setTime(int newH, int newM, int newS);
-	void showTime();
+                                            // 默认值需要在声明时添加
+    ~Time();                                // 析构函数没有参数，不能被重载。
+    void setTime(int newH, int newM, int newS);
+    void showTime();
 private:
-	int hour, min, second;
+    int hour, min, second;
 };
 
 
 // time.cpp
-#include "time.h"	// 需要包含声明的文件
+#include "time.h"    // 需要包含声明的文件
 
 // 使用函数体进行初始化
 Time::Time(int newH, int newM, int newS) {
@@ -198,11 +198,11 @@ Time myTime(...);
     若未定义复制构造函数，这样就是“默认按成员初始化”。
 
     ```
-    <类名> (const <类名>& <对象名>);	// 声明复制构造函数
-    							// 这里的&表示引用，对后面的对象参数进行引用
-    							// 总而言之，这是一个指向同类对象的常引用
+    <类名> (const <类名>& <对象名>);  // 声明复制构造函数
+                                    // 这里的&表示引用，对后面的对象参数进行引用
+                                    // 总而言之，这是一个指向同类对象的常引用
     
-    <类名>::<类名> (const <类名>& <对象名>) {	// 实现
+    <类名>::<类名> (const <类名>& <对象名>) {    // 实现
     	...
     }
     ```
@@ -211,7 +211,7 @@ Time myTime(...);
 
     ```cpp
     TAdd(const TAdd& p) {
-    	x = p.x;		// 这里可以定义自己的复制逻辑
+    	x = p.x;        // 这里可以定义自己的复制逻辑
     	y = p.y;
     	cout<<"复制构造器"<<endl;
     }
@@ -231,7 +231,7 @@ Time myTime(...);
   int main() {
       ...
       Box box1(1, 3, 5);
-      func(box1);	// 系统会进行从box1(实参)到b(形参)的复制，这里就自动调用复制构造器
+      func(box1);    // 系统会进行从box1(实参)到b(形参)的复制，这里就自动调用复制构造器
       ...
   }
   
@@ -243,24 +243,9 @@ Time myTime(...);
   
   int main() {
       Box box2;
-      box2=func2();	/* 其实在调用时，box1 先被复制到了一个临时对象中，
-      				   然后再被赋值给了box2。这里调用的都是复制构造器。
-      				*/
+      box2=func2();    /* 其实在调用时，box1 先被复制到了一个临时对象中，
+                          然后再被赋值给了box2。这里调用的都是复制构造器。
+                       */
       return 0;
   }
   ```
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
