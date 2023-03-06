@@ -32,9 +32,9 @@ C++特色：
 - STL 中的东西都是在 std 中声明的，使用类等之前需要指明其所在的命名空间。
 
 ```cpp
-using namespace std;	// 整个都用 std
-using std::cout;		// 只且只有 cout 可以直接写出来而不用带命名空间
-using std::cin;			// 同上
+using namespace std;  // 整个都用 std
+using std::cout;      // 只且只有 cout 可以直接写出来而不用带命名空间
+using std::cin;	      // 同上
 ```
 
 - 命名空间可防止重名冲突
@@ -44,24 +44,24 @@ using std::cin;			// 同上
 命名空间的定义和使用
 
 ```cpp
-namespace ns1 {		// declear
-	int inflag;
+namespace ns1 {	       // declear
+    int inflag;
     void g(int);
 }
 namespace ns2 {
-	int inflag;
+    int inflag;
 }
 //-------------------------
-ns1::inflag = 2;	// use
+ns1::inflag = 2;       // use
 ns2::inflag = 1;
 //-------------------------
 using ns1::inflag;
-inflag = 666;		// in ns1
-ns2::inflag = 123;	// in ns2
-ns1::g(123);		// call. namespace required.
+inflag = 666;          // in ns1
+ns2::inflag = 123;     // in ns2
+ns1::g(123);           // call. namespace required.
 //-------------------------
 using namespace ns1;
-g(456);				// call. without namespace, for having using above.
+g(456);	               // call. without namespace, for having using above.
 ```
 
 
@@ -73,10 +73,10 @@ C++也可以用没名字的命名空间。
 ```cpp
 int i = 666;
 namespace {
-	int i = 123;
+    int i = 123;
 }
 int main () {
-	cout << i;
+    cout << i;
 }
 // 会报错，【多重定义】
 ```
@@ -92,7 +92,7 @@ IO 由 I/O 流类库提供，cin 和 cout 是两个对象，分别代表标准�
 cout 是一个输出流类的对象，“输出流”指的是从内存向输出设备流动的数据流。cout做的事情就是将要输出的数据插入到输出流对象中。也被称为“插入操作”。
 
 ```cpp
-cout<<exp1<<exp2<<...<<endl;	// endl，换行。"<<"是“输出运算符”或“插入运算符”
+cout<<exp1<<exp2<<...<<endl;    // endl，换行。"<<"是“输出运算符”或“插入运算符”
 ```
 
 ### cin
@@ -102,7 +102,7 @@ cout<<exp1<<exp2<<...<<endl;	// endl，换行。"<<"是“输出运算符”或�
 cin是从输入流对象中提取数据，也称为“提取操作”。
 
 ```cpp
-cin>>var1>>var2>>...<<varn;		// “>>”：“输入运算符”/“提取运算符”
+cin>>var1>>var2>>...<<varn;     // “>>”：“输入运算符”/“提取运算符”
 ```
 
 
@@ -124,8 +124,8 @@ cin>>var1>>var2>>...<<varn;		// “>>”：“输入运算符”/“提取运算
 **C++ 使用 const 定义常量**
 
 ```cpp
-const <datatypeName> <constName> = <expression>;	// 常量在定义时进行初始化
-const int maxLine = 1000;			// 初始化是常量赋值的唯一方式
+const <datatypeName> <constName> = <expression>;  // 常量在定义时进行初始化
+const int maxLine = 1000;                         // 初始化是常量赋值的唯一方式
 
 // 下面这种在声明之后赋值的操作是错误的.
 const int maxLine;
@@ -144,7 +144,7 @@ maxLine = 123;
 
   ```cpp
   #define pow a+b
-  pow*pow;	// 被换成 a+b*a+b，显然与设想不符
+  pow*pow;       // 被换成 a+b*a+b，显然与设想不符
   ```
 
 
@@ -181,7 +181,7 @@ template<typename T 或 class T>	// T 是类型名
 
 template<typename T>
 T max(T a, T b) {
-	return (a>b)?a:b;
+    return (a>b)?a:b;
 }
 ```
 
@@ -193,7 +193,7 @@ T max(T a, T b) {
 
 ```cpp
 int max(int a, int b) {
-	return (a>b)?a:b;
+    return (a>b)?a:b;
 }
 ```
 
@@ -210,7 +210,7 @@ int max(int a, int b) {
 
 template<class T1, class T2>
 T1 max(class T1, class T2) {
-	return (a>b)?a:(T1)b;	// 返回时需要对 b 进行类型转换
+    return (a>b)?a:(T1)b;    // 返回时需要对 b 进行类型转换
 }
 ```
 
